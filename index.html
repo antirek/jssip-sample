@@ -17,7 +17,10 @@
       var ua = new JsSIP.UA(configuration);
 
       ua.start();
+      ua.on('newRTCSession', function(e){ 
+        console.log('incoming', e)
 
+       });
       // Register callbacks to desired call events
       var eventHandlers = {
         'progress': function(e) {
