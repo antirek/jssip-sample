@@ -24,16 +24,16 @@
       // Register callbacks to desired call events
       var eventHandlers = {
         'progress': function(e) {
-          console.log('call is in progress');
+          console.log('call is in progress', e);
         },
         'failed': function(e) {
-          console.log('call failed with cause: '+ e);
+          console.log('call failed with cause: ', e);
         },
         'ended': function(e) {
-          console.log('call ended with cause: '+ e);
+          console.log('call ended with cause: ', e);
         },
         'confirmed': function(e) {
-          console.log('call confirmed');
+          console.log('call confirmed', e);
         }
       };
 
