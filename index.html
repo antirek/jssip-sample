@@ -93,7 +93,7 @@
                   // set remote audio stream
                   console.log('e', e);
                   const remoteAudio = document.createElement('audio');
-                  remoteAudio.src = e.stream;
+                  remoteAudio.srcObject = e.stream;
                   remoteAudio.play();
                 });
               });
