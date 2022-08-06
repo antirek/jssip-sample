@@ -68,6 +68,7 @@
           };
 
           var session = data.session; 
+          console.log('session', session, session.direction);
           if (session.direction === "incoming") {
               // incoming call here
               session.on("accepted",function(){
@@ -86,12 +87,14 @@
                   // unable to establish the call
                   console.log('failed');
               });
-              session.on('addstream', function(e){
-                  // set remote audio stream (to listen to remote audio)
-                  // remoteAudio is <audio> element on page
-                console.log('try add stream');
-                remoteAudio.src = window.URL.createObjectURL(e.stream);
-                remoteAudio.play();
+              session.on('peerconnection', function(data) {
+                console.log('peerconnection')
+                data.peerconnection.addEventListener('addstream', function (e) {
+                  // set remote audio stream
+                  const remoteAudio = document.createElement('audio');
+                  remoteAudio.src = window.URL.createObjectURL(e.stream);
+                  remoteAudio.play();
+                });
               });
               
               // Answer call
