@@ -91,10 +91,11 @@
               });
               session.on('peerconnection', function(data) {
                 console.log('peerconnection', data);
-                var remoteStream = data.getRemoteStreams()[0];
+                var remoteStream = data.peerconnection.getRemoteStreams()[0];
                 console.log('remote stream', remoteStream);
                 var remoteAudio = document.getElementById('audio');
                 remoteAudio.srcObject = remoteStream;
+
 
                 /*
                 data.peerconnection.addEventListener('addstream', function (e) {
