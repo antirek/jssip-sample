@@ -4,56 +4,55 @@
   </head>
   <body>
     <button onclick="connect()">connect</button>
+    <button onclick="call()">call</button>
+
     <script lang="javascript">
 
-    function connect() {
-      var socket = new JsSIP.WebSocketInterface('wss://serge.dmitriev.fvds.ru:7443');
-      var configuration = {
-        sockets  : [ socket ],
-        uri      : 'sip:1000@62.109.24.81',
-        password : 'regity'
-      };
-
-      var ua = new JsSIP.UA(configuration);
-
-      ua.start();
-      ua.on('newRTCSession', function(e){ 
-        console.log('incoming', e)
-
-       });
-      // Register callbacks to desired call events
-      var eventHandlers = {
-        'progress': function(e) {
-          console.log('call is in progress', e);
-        },
-        'failed': function(e) {
-          console.log('call failed with cause: ', e);
-        },
-        'ended': function(e) {
-          console.log('call ended with cause: ', e);
-        },
-        'confirmed': function(e) {
-          console.log('call confirmed', e);
-        }
-      };
-
-      var options = {
-        'eventHandlers'    : eventHandlers,
-        'mediaConstraints' : { 'audio': true, 'video': false },
-        'pcConfig': {
-          'iceServers': [
-            {'urls': ['stun:stun.stunprotocol.org:3478']},
-            {'urls': ['stun:stun.l.google.com:19302']}
-          ],
-        },
-      };
-      console.log('prepare');
-      setTimeout(()=>{
-        console.log('prepare, call')
+      var ua;
+      function call() {
+        var eventHandlers = {
+          'progress': function(e) {
+            console.log('call is in progress', e);
+          },
+          'failed': function(e) {
+            console.log('call failed with cause: ', e);
+          },
+          'ended': function(e) {
+            console.log('call ended with cause: ', e);
+          },
+          'confirmed': function(e) {
+            console.log('call confirmed', e);
+          }
+        };
+        var options = {
+          'eventHandlers'    : eventHandlers,
+          'mediaConstraints' : { 'audio': true, 'video': false },
+          'pcConfig': {
+            'iceServers': [
+              {'urls': ['stun:stun.stunprotocol.org:3478']},
+              {'urls': ['stun:stun.l.google.com:19302']}
+            ],
+          },
+        };
+        console.log('call');
         var session = ua.call('sip:1002@62.109.24.81', options);
-      }, 3*1000)
-      
-    }
+      }
+
+      function connect() {
+        var socket = new JsSIP.WebSocketInterface('wss://serge.dmitriev.fvds.ru:7443');
+        var configuration = {
+          sockets  : [ socket ],
+          uri      : 'sip:1000@62.109.24.81',
+          password : 'regity'
+        };
+
+        ua = new JsSIP.UA(configuration);
+
+        ua.start();
+        ua.on('newRTCSession', function(e){ 
+          console.log('new session', e)
+        });
+      }
     </script>
   </body>
 </html>
