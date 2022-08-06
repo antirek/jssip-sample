@@ -52,7 +52,36 @@
 
         ua.start();
         ua.on('newRTCSession', function(e){ 
-          console.log('new session', e)
+          console.log('new session', e);
+
+          var session = e.session; 
+          if (session.direction === "incoming") {
+              // incoming call here
+              session.on("accepted",function(){
+                  // the call has answered
+              });
+              session.on("confirmed",function(){
+                  // this handler will be called for incoming calls too
+              });
+              session.on("ended",function(){
+                  // the call has ended
+              });
+              session.on("failed",function(){
+                  // unable to establish the call
+              });
+              session.on('addstream', function(e){
+                  // set remote audio stream (to listen to remote audio)
+                  // remoteAudio is <audio> element on page
+                  remoteAudio.src = window.URL.createObjectURL(e.stream);
+                  remoteAudio.play();
+              });
+              
+              // Answer call
+              session.answer(callOptions);
+              
+              // Reject call (or hang up it)
+              session.terminate();
+          }
         });
       }
     </script>
