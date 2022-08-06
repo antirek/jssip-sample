@@ -101,9 +101,9 @@
                 data.peerconnection.addEventListener('track', function (e) {
                   // set remote audio stream
                   console.log('e', e);
-                  var remoteAudio = document.getElementById('audio');
+                  // var remoteAudio = document.getElementById('audio');                  
+                  var remoteAudio = document.createElement('audio');
                   console.log('remote audio', remoteAudio);
-                  // var remoteAudio = document.createElement('audio');
                   remoteAudio.srcObject = e.streams[0];
                   remoteAudio.play();
                 });
