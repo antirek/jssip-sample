@@ -41,9 +41,11 @@
       function connect() {
         var socket = new JsSIP.WebSocketInterface('wss://serge.dmitriev.fvds.ru:7443');
         var configuration = {
-          sockets  : [ socket ],
-          uri      : 'sip:1000@62.109.24.81',
-          password : 'regity'
+          sockets: [ socket ],
+          uri: 'sip:1000@62.109.24.81',
+          password : 'regity',
+          register: true,
+          register_expires: 120,
         };
 
         ua = new JsSIP.UA(configuration);
