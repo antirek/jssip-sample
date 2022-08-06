@@ -54,6 +54,13 @@
         ua.on('newRTCSession', function(e){ 
           console.log('new session', e);
 
+          var callOptions = {
+            mediaConstraints: {
+              audio: true, // only audio calls
+              video: false
+            }
+          };
+
           var session = e.session; 
           if (session.direction === "incoming") {
               // incoming call here
