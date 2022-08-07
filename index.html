@@ -89,6 +89,18 @@
                   // unable to establish the call
                   console.log('failed');
               });
+              session.on('peerconnection:createanswerfailed', function (e) {
+                console.log('peerconnection:createanswerfailed', e);
+              });
+
+              session.on('icecandidate', function (e) {
+                console.log('icecandidate', e);
+              });
+
+              session.on('getusermediafailed', function (e) {
+                console.log('getusermediafailed', e);
+              });
+
               session.on('peerconnection', function(data) {
                 console.log('peerconnection', data);
                 
@@ -98,13 +110,15 @@
                 var remoteAudio = document.getElementById('audio');
                 remoteAudio.srcObject = remoteStream;
                 */
-                data.peerconnection.addEventListener('track', function (e) {
+                data.peerconnection.addEventListener('track', function (trackEvent) {
                   // set remote audio stream
-                  console.log('e', e);
-                  // var remoteAudio = document.getElementById('audio');                  
+                  console.log('trackEvent', trackEvent);
+                  // var remoteAudio = document.getElementById('audio');
                   var remoteAudio = document.createElement('audio');
                   console.log('remote audio', remoteAudio);
-                  remoteAudio.srcObject = e.streams[0];
+                  var mediaStream = e.streams[0];
+                  console.log('mediastream', mediaStream);
+                  remoteAudio.srcObject = mediaStream;
                   remoteAudio.play();
                 });
               });
