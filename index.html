@@ -102,15 +102,24 @@
                 console.log('getusermediafailed', e);
               });
 
+              session.on('addstream', function(e){
+                  // set remote audio stream (to listen to remote audio)
+                  // remoteAudio is <audio> element on page
+                  var remoteAudio = document.createElement('audio');
+                  remoteAudio.src = window.URL.createObjectURL(e.stream);
+                  remoteAudio.play();
+              });
+
               session.on('peerconnection', function(data) {
                 console.log('peerconnection', data);
-                
+
                 /*
                 var remoteStream = data.peerconnection.getRemoteStreams()[0];
                 console.log('remote stream', remoteStream);
                 var remoteAudio = document.getElementById('audio');
                 remoteAudio.srcObject = remoteStream;
                 */
+                /*
                 data.peerconnection.addEventListener('track', function (trackEvent) {
                   // set remote audio stream
                   console.log('trackEvent', trackEvent);
@@ -123,6 +132,7 @@
                   remoteAudio.play();
                   console.log('remote audio', {remoteAudio})
                 });
+                */
               });
               
               // Answer call
