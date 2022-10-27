@@ -53,6 +53,7 @@
         ua = new JsSIP.UA(configuration);
 
         ua.start();
+        
         ua.on('newRTCSession', function(data){ 
           console.log('new session', data);
 
@@ -71,7 +72,7 @@
 
           var session = data.session; 
           console.log('session', session, session.direction);
-          if (session.direction === "incoming") {
+          // if (session.direction === "incoming") {
               // incoming call here
               session.on("accepted",function(){
                 // the call has answered
@@ -129,7 +130,7 @@
               session.answer(callOptions);
               // Reject call (or hang up it)
               // session.terminate();
-          }
+          
           
         });
       }
