@@ -78,30 +78,7 @@
           };
 
           var session = data.session;
-          session.on('peerconnection', function(data) {
-            console.log('peerconnection', data);
-
-            /*
-            var remoteStream = data.peerconnection.getRemoteStreams()[0];
-            console.log('remote stream', remoteStream);
-            var remoteAudio = document.getElementById('audio');
-            remoteAudio.srcObject = remoteStream;
-            */
-            /*
-            data.peerconnection.addEventListener('track', function (trackEvent) {
-              // set remote audio stream
-              console.log('trackEvent', trackEvent);
-              // var remoteAudio = document.getElementById('audio');
-              var remoteAudio = document.createElement('audio');
-              console.log('remote audio', remoteAudio);
-              var mediaStream = trackEvent.streams[0];
-              console.log('mediastream', mediaStream);
-              remoteAudio.srcObject = mediaStream;
-              remoteAudio.play();
-              console.log('remote audio', {remoteAudio})
-            });
-            */
-          });
+          
           console.log('session', session, session.direction);
           // if (session.direction === "incoming") {
           // incoming call here
@@ -142,15 +119,14 @@
               remoteAudio.play();
           });
 
-          
           // Answer call
-          if (session.direction === "incoming") {              
+          if (session.direction === "incoming") {
+            console.log('incoming call, try answer');
             session.answer(callOptions);
           }
           // Reject call (or hang up it)
           // session.terminate();
-        
-        
+
         });
       }
     </script>
