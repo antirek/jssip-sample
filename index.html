@@ -37,15 +37,15 @@
           },
         };
         console.log('call');
-        var session = ua.call('sip:1002@62.109.24.81', options);
+        var session = ua.call('sip:101@62.109.24.81', options);
       }
 
       function connect() {
-        var socket = new JsSIP.WebSocketInterface('wss://serge.dmitriev.fvds.ru:7443');
+        var socket = new JsSIP.WebSocketInterface('wss://serge.dmitriev.fvds.ru:8089/ws');
         var configuration = {
           sockets: [ socket ],
-          uri: 'sip:1000@62.109.24.81',
-          password : 'regity',
+          uri: 'sip:103@62.109.24.81',
+          password : 'zxcv1234',
           register: true,
           register_expires: 120,
         };
@@ -136,5 +136,3 @@
     </script>
   </body>
 </html>
-
-
