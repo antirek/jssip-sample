@@ -27,12 +27,19 @@
           }
         };
         var options = {
-          'eventHandlers'    : eventHandlers,
-          'mediaConstraints' : { 'audio': true, 'video': false },
-          'pcConfig': {
-            'iceServers': [
-              {'urls': ['stun:stun.l.google.com:19302']},
-              {'urls': ['stun:stun.stunprotocol.org:3478']},
+          eventHandlers: eventHandlers,
+          mediaConstraints: {
+            audio: true,
+            video: false,
+          },
+          rtcpMuxPolicy: 'negotiate',
+          rtcOfferConstraints: {
+            offerToReceiveAudio: true
+          },
+          pcConfig: {
+            iceServers: [
+              {urls: ['stun:stun.l.google.com:19302']},
+              {urls: ['stun:stun.stunprotocol.org:3478']},
             ],
           },
         };
@@ -70,80 +77,80 @@
             },
           };
 
-          var session = data.session; 
+          var session = data.session;
+          session.on('peerconnection', function(data) {
+            console.log('peerconnection', data);
+
+            /*
+            var remoteStream = data.peerconnection.getRemoteStreams()[0];
+            console.log('remote stream', remoteStream);
+            var remoteAudio = document.getElementById('audio');
+            remoteAudio.srcObject = remoteStream;
+            */
+            /*
+            data.peerconnection.addEventListener('track', function (trackEvent) {
+              // set remote audio stream
+              console.log('trackEvent', trackEvent);
+              // var remoteAudio = document.getElementById('audio');
+              var remoteAudio = document.createElement('audio');
+              console.log('remote audio', remoteAudio);
+              var mediaStream = trackEvent.streams[0];
+              console.log('mediastream', mediaStream);
+              remoteAudio.srcObject = mediaStream;
+              remoteAudio.play();
+              console.log('remote audio', {remoteAudio})
+            });
+            */
+          });
           console.log('session', session, session.direction);
           // if (session.direction === "incoming") {
-              // incoming call here
-              session.on("accepted",function(){
-                // the call has answered
-                console.log('accepted');
-              });
-              session.on("confirmed",function(){
-                // this handler will be called for incoming calls too
-                console.log('confirmed');
-              });
-              session.on("ended",function(){
-                  // the call has ended
-                  console.log('ended');
-              });
-              session.on("failed",function(){
-                  // unable to establish the call
-                  console.log('failed');
-              });
-              session.on('peerconnection:createanswerfailed', function (e) {
-                console.log('peerconnection:createanswerfailed', e);
-              });
+          // incoming call here
+          session.on("accepted",function(){
+            // the call has answered
+            console.log('accepted');
+          });
+          session.on("confirmed",function(){
+            // this handler will be called for incoming calls too
+            console.log('confirmed');
+          });
+          session.on("ended",function(){
+              // the call has ended
+              console.log('ended');
+          });
+          session.on("failed",function(){
+              // unable to establish the call
+              console.log('failed');
+          });
+          session.on('peerconnection:createanswerfailed', function (e) {
+            console.log('peerconnection:createanswerfailed', e);
+          });
 
-              session.on('icecandidate', function (e) {
-                console.log('icecandidate', e);
-              });
+          session.on('icecandidate', function (e) {
+            console.log('icecandidate', e);
+          });
 
-              session.on('getusermediafailed', function (e) {
-                console.log('getusermediafailed', e);
-              });
+          session.on('getusermediafailed', function (e) {
+            console.log('getusermediafailed', e);
+          });
 
-              session.on('addstream', function(e){
-                  // set remote audio stream (to listen to remote audio)
-                  // remoteAudio is <audio> element on page
-                  console.log('ADDSTREAM', e);
-                  var remoteAudio = document.createElement('audio');
-                  remoteAudio.src = window.URL.createObjectURL(e.stream);
-                  remoteAudio.play();
-              });
+          session.on('addstream', function(e){
+              // set remote audio stream (to listen to remote audio)
+              // remoteAudio is <audio> element on page
+              console.log('ADDSTREAM', e);
+              var remoteAudio = document.createElement('audio');
+              remoteAudio.src = window.URL.createObjectURL(e.stream);
+              remoteAudio.play();
+          });
 
-              session.on('peerconnection', function(data) {
-                console.log('peerconnection', data);
-
-                /*
-                var remoteStream = data.peerconnection.getRemoteStreams()[0];
-                console.log('remote stream', remoteStream);
-                var remoteAudio = document.getElementById('audio');
-                remoteAudio.srcObject = remoteStream;
-                */
-                /*
-                data.peerconnection.addEventListener('track', function (trackEvent) {
-                  // set remote audio stream
-                  console.log('trackEvent', trackEvent);
-                  // var remoteAudio = document.getElementById('audio');
-                  var remoteAudio = document.createElement('audio');
-                  console.log('remote audio', remoteAudio);
-                  var mediaStream = trackEvent.streams[0];
-                  console.log('mediastream', mediaStream);
-                  remoteAudio.srcObject = mediaStream;
-                  remoteAudio.play();
-                  console.log('remote audio', {remoteAudio})
-                });
-                */
-              });
-              
-              // Answer call
-              if (session.direction === "incoming") {              
-                session.answer(callOptions);
-              }
-              // Reject call (or hang up it)
-              // session.terminate();
           
-          
+          // Answer call
+          if (session.direction === "incoming") {              
+            session.answer(callOptions);
+          }
+          // Reject call (or hang up it)
+          // session.terminate();
+        
+        
         });
       }
     </script>
