@@ -31,13 +31,13 @@
           'mediaConstraints' : { 'audio': true, 'video': false },
           'pcConfig': {
             'iceServers': [
+              {'urls': ['stun:stun.l.google.com:19302']},
               {'urls': ['stun:stun.stunprotocol.org:3478']},
-              {'urls': ['stun:stun.l.google.com:19302']}
             ],
           },
         };
         console.log('call');
-        var session = ua.call('sip:102@62.109.24.81', options);
+        var session = ua.call('sip:101@62.109.24.81', options);
       }
 
       function connect() {
@@ -63,8 +63,8 @@
             },
             'pcConfig': {
               'iceServers': [
+                {'urls': ['stun:stun.l.google.com:19302']},
                 {'urls': ['stun:stun.stunprotocol.org:3478']},
-                {'urls': ['stun:stun.l.google.com:19302']}
               ],
             },
           };
