@@ -120,16 +120,16 @@
 
           session.on('peerconnection', function(e) {
             console.log('peerconnection', e);
+            e.peerconnection.onaddstream = function(event) {
+			        console.log(' *** addstream', event);
+              audioElement = document.createElement("audio");
+              document.body.appendChild(audioElement);
+			        audioElement.srcObject = event.stream;
+              audioElement.play();
+            }
           })
 
-          session.on('addstream', function(e){
-              // set remote audio stream (to listen to remote audio)
-              // remoteAudio is <audio> element on page
-              console.log('ADDSTREAM', e);
-              var remoteAudio = document.createElement('audio');
-              remoteAudio.src = window.URL.createObjectURL(e.stream);
-              remoteAudio.play();
-          });
+
 
           // Answer call
           if (session.direction === "incoming") {
