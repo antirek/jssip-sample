@@ -32,6 +32,9 @@
           },
           'confirmed': function(e) {
             console.log('call confirmed', e);
+          },
+          'peerconnection': function(e) {
+            console.log('peerconnection', e);
           }
         };
         var options = {
@@ -80,13 +83,13 @@
           console.log('session', session, session.direction);
           // if (session.direction === "incoming") {
           // incoming call here
-          session.on("accepted",function(){
+          session.on("accepted", function(e){
             // the call has answered
-            console.log('accepted');
+            console.log('accepted', e);
           });
-          session.on("confirmed",function(){
+          session.on("confirmed",function(e){
             // this handler will be called for incoming calls too
-            console.log('confirmed');
+            console.log('confirmed', e);
           });
           session.on("ended",function(){
               // the call has ended
