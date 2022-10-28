@@ -35,6 +35,13 @@
           },
           'peerconnection': function(e) {
             console.log('peerconnection', e);
+            e.peerconnection.onaddstream = function(event) {
+			        console.log(' *** addstream', event);
+              audioElement = document.createElement("audio");
+              document.body.appendChild(audioElement);
+			        audioElement.srcObject = event.stream;
+              audioElement.play();
+            }
           }
         };
         var options = {
