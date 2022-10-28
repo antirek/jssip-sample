@@ -108,6 +108,10 @@
             console.log('getusermediafailed', e);
           });
 
+          session.on('peerconnection', function(e) {
+            console.log('peerconnection', e);
+          })
+
           session.on('addstream', function(e){
               // set remote audio stream (to listen to remote audio)
               // remoteAudio is <audio> element on page
